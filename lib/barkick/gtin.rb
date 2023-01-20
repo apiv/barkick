@@ -228,7 +228,7 @@ module Barkick
     # variable weight
 
     def variable?
-      prefix.start_with("02") || prefix.start_with("2")
+      prefix.start_with?("02") || prefix.start_with?("2")
     end
 
     # EAN13 variable format: YYCCCCCPPPPPX (supports amounts up to $999.99)

@@ -28,6 +28,16 @@ class BarkickTest < Minitest::Test
     assert Barkick::GTIN.new(gtin.base_gtin14).valid?
   end
 
+  def test_variable_ean13
+    gtin = Barkick::GTIN.new("2988350543218", type: :ean13)
+    assert gtin.valid?
+    assert gtin.variable?
+    assert gtin.restricted?
+    assert_equal 543.21, gtin.price
+    assert_equal "02988350543218", gtin.base_gtin14
+    assert Barkick::GTIN.new(gtin.base_gtin14).valid?
+  end
+
   def test_no_type
     assert_raises(ArgumentError) do
       Barkick::GTIN.new("03744806")
