@@ -228,14 +228,17 @@ module Barkick
     # variable weight
 
     def variable?
-      (20..29).cover?(prefix.to_i)
+      prefix.start_with("02") || prefix.start_with("2")
     end
 
+    # EAN13 variable format: YYCCCCCPPPPPX (supports amounts up to $999.99)
+    # UPC-A variable format:  YCCCCCXPPPPX (supports amounts up to $99.99)
     def price
-      if variable?
-        gtin14[-5..-2].to_f / 100
+      return unless variable?
+      if @type == :ean13
+        gtin14[-6..-2].to_f / 100
       else
-        nil
+        gtin14[-5..-2].to_f / 100
       end
     end
 
